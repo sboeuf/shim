@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/moby/moby/pkg/term"
@@ -79,6 +80,15 @@ func main() {
 	if err != nil {
 		shimLog.WithError(err).WithField("loglevel", logLevel).Error("invalid log level")
 		os.Exit(exitFailure)
+	}
+
+	// Wait on SIGUSR1 if it is an init process shim, in which case
+	// container ID equals to exec ID.
+	if container == execId {
+		waitSigUsr1 := make(chan os.Signal, 1)
+		signal.Notify(waitSigUsr1, syscall.SIGUSR1)
+		<-waitSigUsr1
+		signal.Stop(waitSigUsr1)
 	}
 
 	shim, err := newShim(agentAddr, container, execId)
