@@ -30,7 +30,6 @@
   revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
 
 [[projects]]
-  branch = "master"
   name = "github.com/kata-containers/agent"
   packages = ["protocols/client","protocols/grpc","protocols/mockserver"]
   revision = "8f22514ae5790f3b6953cf93692e663fa29469e3"
@@ -65,9 +64,9 @@
 
 [[projects]]
   name = "github.com/sirupsen/logrus"
-  packages = ["."]
-  revision = "f006c2ac4710855cf0f916dd6b77acf6b048dc6e"
-  version = "v1.0.3"
+  packages = [".","hooks/syslog"]
+  revision = "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
+  version = "v1.0.4"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -113,6 +112,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "030ac0204af3a20262e1228f3433c0eb02a69c8233c4dc7dd4ff28b60749e552"
+  inputs-digest = "4ffb7a4dea5a4ca14a6adfef657342d36024f0914fba45bc214d8192ed2ed976"
   solver-name = "gps-cdcl"
   solver-version = 1
