@@ -77,12 +77,15 @@ type dialer func(string, time.Duration) (net.Conn, error)
 //   - unix://<unix socket path>
 //   - vsock://<cid>:<port>
 //   - <unix socket path>
-func NewAgentClient(ctx context.Context, sock string, enableYamux bool) (*AgentClient, error) {
+func NewAgentClient(ctx context.Context, sock string, enableYamux bool, connRetry bool) (*AgentClient, error) {
 	grpcAddr, parsedAddr, err := parse(sock)
 	if err != nil {
 		return nil, err
 	}
 	dialOpts := []grpc.DialOption{grpc.WithInsecure(), grpc.WithBlock()}
+	if connRetry {
+		dialOpts = append(dialOpts, grpc.WithBackoffMaxDelay(10 * time.Second))
+	}
 	dialOpts = append(dialOpts, grpc.WithDialer(agentDialer(parsedAddr, enableYamux)))
 
 	var tracer opentracing.Tracer

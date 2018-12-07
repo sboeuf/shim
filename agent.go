@@ -18,7 +18,7 @@ func newShimAgent(ctx context.Context, addr string) (*shimAgent, error) {
 	span, _ := trace(ctx, "newShimAgent")
 	defer span.Finish()
 
-	client, err := client.NewAgentClient(ctx, addr, false)
+	client, err := client.NewAgentClient(ctx, addr, false, true)
 	if err != nil {
 		return nil, err
 	}

@@ -27,7 +27,7 @@ import (
 // https://github.com/grpc/grpc/blob/master/doc/connection-backoff.md.
 var DefaultBackoffConfig = BackoffConfig{
 	MaxDelay:  120 * time.Second,
-	baseDelay: 1.0 * time.Second,
+	baseDelay: 100 * time.Millisecond,
 	factor:    1.6,
 	jitter:    0.2,
 }
